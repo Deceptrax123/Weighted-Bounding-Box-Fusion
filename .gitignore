@@ -10,6 +10,8 @@
 # Icon must end with two \r
 Icon
 
+#Weights
+best_yolov5_weights.pt
 
 # Thumbnails
 ._*
