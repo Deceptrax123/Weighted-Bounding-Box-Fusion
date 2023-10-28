@@ -2,6 +2,8 @@ import pandas as pd
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+from dotenv import load_dotenv
 
 
 # draw the outputs using opencv tools
@@ -35,12 +37,14 @@ def draw_bbox_conf(image, boxes, scores, color=(255, 0, 0), thickness=-1):
 
 
 def detect():
-    res = pd.read_csv("./Results/test_inpaint.csv",
+    res = pd.read_csv("./Results/test_inpaint_conf_0.40.csv",
                       converters={'boxes': pd.eval, 'scores': pd.eval})
 
-    img_test = '/Volumes/T7 Shield/Smudge/Datasets/Wheat_Head_detection/test/0ade56ba5d47c384378fc185efe9f12e4143664c1dbb45f34473bdbcc67daaf8.png'
-    id = "0ade56ba5d47c384378fc185efe9f12e4143664c1dbb45f34473bdbcc67daaf8.png"
+    load_dotenv("./.env")
+    test_path = os.getenv("TEST_PATH")
+    id = os.getenv("ID")
 
+    img_test = os.path.join(test_path, id)
     boxes = np.array(res.loc[res['image_id'] == id]['boxes'])[0]
     scores = np.array(res.loc[res['image_id'] == id]['scores'])[0]
 
