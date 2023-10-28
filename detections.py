@@ -37,23 +37,33 @@ def draw_bbox_conf(image, boxes, scores, color=(255, 0, 0), thickness=-1):
 
 
 def detect():
-    res = pd.read_csv("./Results/test_inpaint_conf_0.40.csv",
+    load_dotenv("./.env")
+
+    results_path = os.getenv("RESULTS_CSV")
+    res = pd.read_csv(results_path,
                       converters={'boxes': pd.eval, 'scores': pd.eval})
 
-    load_dotenv("./.env")
     test_path = os.getenv("TEST_PATH")
-    id = os.getenv("ID")
 
-    img_test = os.path.join(test_path, id)
-    boxes = np.array(res.loc[res['image_id'] == id]['boxes'])[0]
-    scores = np.array(res.loc[res['image_id'] == id]['scores'])[0]
+    # get image names
+    image_names = os.listdir(test_path)
 
-    cv_img = cv2.imread(img_test)
-    image_boxed = draw_bbox_conf(
-        cv_img, boxes, scores)
+    # root for results
+    result_dir = os.getenv("RESULTS_PATH")
+    for id in image_names:
+        if '_' not in id:
+            img_test = os.path.join(test_path, id)
+            boxes = np.array(res.loc[res['image_id'] == id]['boxes'])[0]
+            scores = np.array(res.loc[res['image_id'] == id]['scores'])[0]
 
-    cv2.imshow('experiment', image_boxed)
-    cv2.waitKey(0)
+            cv_img = cv2.imread(img_test)
+            image_boxed = draw_bbox_conf(
+                cv_img, boxes, scores)
+
+            cv2.imwrite(os.path.join(result_dir, id), image_boxed)
+
+    # cv2.imshow('experiment', image_boxed)
+    # cv2.waitKey(0)
 
 
 def main():
