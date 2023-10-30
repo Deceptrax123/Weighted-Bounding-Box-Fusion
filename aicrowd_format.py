@@ -30,13 +30,18 @@ def convert_to_crowd():
         else:
             formatted = ""
             for k, i in enumerate(prediction):
-                a, b, c, d = str(i[0]), str(i[1]), str(i[2]), str(i[3])
+                a, b, c, d = (i[0]), (i[1]), (i[2]), (i[3])
+
+                xmin = str(a)
+                ymin = str(b)
+                xmax = str(a+c)
+                ymax = str(b+d)
 
                 if k != len(prediction)-1:
-                    pred = a+' '+b+' '+c+' '+d+';'
+                    pred = xmin+' '+ymin+' '+xmax+' '+ymax+';'
                     formatted += pred
                 else:
-                    pred = a+' '+b+' '+c+' '+d
+                    pred = xmin+' '+ymin+' '+xmax+' '+ymax
                     formatted += pred
             box_formatted.append(formatted)
 
