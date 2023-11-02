@@ -13,6 +13,7 @@ Icon
 
 #Weights
 best_yolov5_weights.pt
+last.pt
 
 # Thumbnails
 ._*
