@@ -1,5 +1,5 @@
 # Bounding Box Fusion
-The repository is a part of Mitigating-Negative-Transfer
+The repository is a part of Mitigating-Negative-Transfer.
 It contains the code for fusing detections of results obtained from different
 mitigation methods. Experiments were carried out using various combinations of mitigated instances and model weights. 
 
